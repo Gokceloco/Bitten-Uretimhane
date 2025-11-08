@@ -28,15 +28,5 @@ public class LevelManager : MonoBehaviour
     {
         levelNo = Math.Clamp(levelNo, 1, levelPrefabs.Count);
         _curLevel = Instantiate(levelPrefabs[levelNo-1]);
-    }    
-
-    public void LoadNextLevel()
-    {
-
-    }
-
-    public void LoadPreviousLevel()
-    {
-
     }
 }
