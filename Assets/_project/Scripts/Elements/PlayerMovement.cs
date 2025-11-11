@@ -8,10 +8,15 @@ public class PlayerMovement : MonoBehaviour
     public float fallSpeedBonus;
 
     public LayerMask jumpLayerMask;
+    public LayerMask lookAtLayerMask;
+
+    public Camera mainCamera;
     
     private Rigidbody _rb;
 
     private Vector3 _initialMousePos;
+
+    public Transform moveBox;
 
     private void Awake()
     {
@@ -45,7 +50,20 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
+        LookAtMouse();
         MovePlayer(direction);
+    }
+
+    private void LookAtMouse()
+    {
+        if (Physics.Raycast(mainCamera.transform.position,
+        mainCamera.ScreenPointToRay(Input.mousePosition).direction,
+        out RaycastHit hit, 20, lookAtLayerMask))
+        {
+            var lookPos = hit.point;
+            lookPos.y = transform.position.y;
+            transform.LookAt(lookPos);
+        }
     }
 
     private void Jump()
