@@ -899,6 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35eda5b7e9f3ada469d72cdaadd36401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
+  gameDirector: {fileID: 1074376556}
   levelNo: 1
   levelPrefabs:
   - {fileID: 7587271603937633384, guid: 77b4a99bd7fa489428fc099462876194, type: 3}

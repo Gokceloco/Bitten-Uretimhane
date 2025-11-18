@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public GameDirector gameDirector;
+
     public int levelNo;
 
     public List<Level> levelPrefabs;
@@ -28,5 +30,6 @@ public class LevelManager : MonoBehaviour
     {
         levelNo = Math.Clamp(levelNo, 1, levelPrefabs.Count);
         _curLevel = Instantiate(levelPrefabs[levelNo-1]);
+        _curLevel.StartLevel(gameDirector);
     }
 }

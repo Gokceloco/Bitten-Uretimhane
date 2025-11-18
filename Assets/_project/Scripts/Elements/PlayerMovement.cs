@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Physics.Raycast(mainCamera.transform.position,
         mainCamera.ScreenPointToRay(Input.mousePosition).direction,
-        out RaycastHit hit, 20, lookAtLayerMask))
+        out RaycastHit hit, 40, lookAtLayerMask))
         {
             var lookPos = hit.point;
             lookPos.y = transform.position.y;

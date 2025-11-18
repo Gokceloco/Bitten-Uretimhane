@@ -26,8 +26,8 @@ public class Bullet : MonoBehaviour
         }
         if (other.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
-            Destroy(other.gameObject);
+            other.GetComponent<Enemy>().GetHit();
+            Destroy(gameObject);            
         }
     }
 }
