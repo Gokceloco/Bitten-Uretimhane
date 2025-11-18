@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed;
+    public float walkSpeed;
+    public float runSpeed;
+
     public float jumpForce;
     public float fallSpeedBonus;
 
@@ -80,6 +82,13 @@ public class PlayerMovement : MonoBehaviour
         if (yVelocity.y < 0)
         {
             yVelocity.y -= fallSpeedBonus * Time.deltaTime;
+        }
+
+        var speed = walkSpeed;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = runSpeed;
         }
 
         _rb.linearVelocity = direction.normalized * speed + yVelocity;

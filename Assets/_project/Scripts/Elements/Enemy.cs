@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -14,10 +15,15 @@ public class Enemy : MonoBehaviour
 
     public ActionState actionState;
 
+    private NavMeshAgent _navmeshAgent;
+
+    public LayerMask seeThroughLayerMask;
+
     public void StartEnemy(GameDirector gameDirector)
     {
         _currentHealth = startHealth;
         _gameDirector = gameDirector;
+        _navmeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
@@ -26,27 +32,32 @@ public class Enemy : MonoBehaviour
         var distance = (playerPos - transform.position).magnitude;
         var direction = (playerPos - transform.position).normalized;
 
+
         //Decider Logic
         if (distance < 2)
         {
             actionState = ActionState.Attacking;
         }
-        else if (distance < 10)
+        else if (distance < 10 && CanSeePlayer(direction))
         {
             actionState = ActionState.WalkingTowardsPlayer;
         }
 
-
-
-
         //Action
         if (actionState == ActionState.WalkingTowardsPlayer)
         {
-            transform.position += direction * speed * Time.deltaTime;
+            _navmeshAgent.SetDestination(playerPos);
         }       
+    }
 
+    private bool CanSeePlayer(Vector3 direction)
+    {
+        if (Physics.Raycast(transform.position + Vector3.up, direction, 10, seeThroughLayerMask))
+        {
+            return false;
+        }
 
-
+        return true;
     }
 
     public void GetHit()
@@ -76,4 +87,10 @@ public enum ActionState
     WalkingTowardsPlayer,
     Attacking,
     Dying,
+}
+
+public enum EnemyType
+{
+    Knight,
+    Boss1,
 }

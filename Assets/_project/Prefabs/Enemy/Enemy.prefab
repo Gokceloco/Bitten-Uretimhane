@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7862923464420372373}
   - component: {fileID: 3647210680236684275}
   - component: {fileID: 2322587162442358690}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,8 @@ GameObject:
   - component: {fileID: 3438464815712488729}
   - component: {fileID: 2177540054109031052}
   - component: {fileID: 7042685194178188278}
-  m_Layer: 0
+  - component: {fileID: 2602550677638051348}
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -162,6 +163,32 @@ MonoBehaviour:
   startHealth: 10
   healthBar: {fileID: 1181071303999642644}
   speed: 4
+  actionState: 0
+  seeThroughLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!195 &2602550677638051348
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8454254430376368021}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &5709684759538243010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -226,9 +253,25 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1503237471681884685, guid: d702bd3a8635934409ddcf080a8e51b1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3441070663537901645, guid: d702bd3a8635934409ddcf080a8e51b1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871621475342615678, guid: d702bd3a8635934409ddcf080a8e51b1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6430160011350877569, guid: d702bd3a8635934409ddcf080a8e51b1, type: 3}
       propertyPath: m_Name
       value: HealthBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 6430160011350877569, guid: d702bd3a8635934409ddcf080a8e51b1, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

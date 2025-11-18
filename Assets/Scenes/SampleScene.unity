@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 101668691}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ShootPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 290373425}
   - component: {fileID: 290373427}
   - component: {fileID: 290373426}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -646,6 +646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameDirector
   levelManager: {fileID: 1306304240}
   player: {fileID: 1177098134}
+  gameState: 0
 --- !u!1 &1177098130
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +659,8 @@ GameObject:
   - component: {fileID: 1177098134}
   - component: {fileID: 1177098133}
   - component: {fileID: 1177098132}
-  m_Layer: 0
+  - component: {fileID: 1177098135}
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -721,7 +723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433c2d73812a9df45810392d9f9865b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  speed: 5
+  walkSpeed: 5
+  runSpeed: 10
   jumpForce: 300
   fallSpeedBonus: 15
   jumpLayerMask:
@@ -744,6 +747,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa6bd07d4c74eb439254d0fe5ee9055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  gameDirector: {fileID: 1074376556}
+--- !u!136 &1177098135
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177098130}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1255001568
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,8 +782,7 @@ GameObject:
   - component: {fileID: 1255001569}
   - component: {fileID: 1255001572}
   - component: {fileID: 1255001571}
-  - component: {fileID: 1255001570}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -778,27 +804,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1177098131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1255001570
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255001568}
-  m_Material: {fileID: 13400000, guid: 630ca99fdf4d9714da77330c64c1465b, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1255001571
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -915,7 +920,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2032420638}
   - component: {fileID: 2032420639}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

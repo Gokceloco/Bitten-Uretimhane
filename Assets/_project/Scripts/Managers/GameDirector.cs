@@ -6,6 +6,8 @@ public class GameDirector : MonoBehaviour
 
     public Player player;
 
+    public GameState gameState;
+
     private void Start()
     {
         StartLevel();
@@ -28,9 +30,24 @@ public class GameDirector : MonoBehaviour
     }
     void StartLevel()
     {
+        gameState = GameState.GamePlay;
         levelManager.RestartLevelManager();
         player.RestartPlayer();
     }
+
+    public void LevelCompleted()
+    {
+        gameState = GameState.Win;
+        Invoke(nameof(LoadNextLevel), 1);
+    }
+
+    public void LevelFailed()
+    {
+        gameState = GameState.Lose;
+        Invoke(nameof(StartLevel), 1);
+    }
+
+
     void LoadPreviousLevel()
     {
         levelManager.levelNo--;
@@ -41,4 +58,12 @@ public class GameDirector : MonoBehaviour
         levelManager.levelNo++;
         StartLevel();
     }
+}
+
+public enum GameState
+{
+    MainMenu,
+    GamePlay,
+    Win,
+    Lose,
 }
