@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,24 +8,21 @@ public class Enemy : MonoBehaviour
 
     public int startHealth;
     private int _currentHealth;
-
     public HealthBar healthBar;
-
-    public float speed;
-
     public ActionState actionState;
-
     private NavMeshAgent _navmeshAgent;
-
     public LayerMask seeThroughLayerMask;
+    private bool _isAttackInProgress;
+    public float attackRate;
 
+    private EnemyAnimator _enemyAnimator;
     public void StartEnemy(GameDirector gameDirector)
     {
         _currentHealth = startHealth;
         _gameDirector = gameDirector;
         _navmeshAgent = GetComponent<NavMeshAgent>();
+        _enemyAnimator = GetComponent<EnemyAnimator>();
     }
-
     private void Update()
     {
         var playerPos = _gameDirector.player.transform.position;
@@ -38,18 +35,49 @@ public class Enemy : MonoBehaviour
         {
             actionState = ActionState.Attacking;
         }
-        else if (distance < 10 && CanSeePlayer(direction))
+        else if (!_isAttackInProgress && distance < 10 && CanSeePlayer(direction))
         {
-            actionState = ActionState.WalkingTowardsPlayer;
+            actionState = ActionState.WalkingTowardsPlayer;            
         }
 
         //Action
         if (actionState == ActionState.WalkingTowardsPlayer)
         {
             _navmeshAgent.SetDestination(playerPos);
-        }       
+            _navmeshAgent.isStopped = false;
+            _enemyAnimator.PlayWalkAnimation();
+        }
+        else if (actionState == ActionState.Attacking)
+        {
+            _navmeshAgent.isStopped = true;
+            if (!_isAttackInProgress)
+            {
+                StartCoroutine(AttackPlayerCoroutine());
+            }            
+        }
     }
+    IEnumerator AttackPlayerCoroutine()
+    {
+        _isAttackInProgress = true;
+        _enemyAnimator.PlayAttackAnimation();
+        yield return new WaitForSeconds(attackRate);
 
+        var damage = 1;
+
+        if (Random.value < .2f)
+        {
+            damage = 2;
+        }
+
+        var playerPos = _gameDirector.player.transform.position;
+        var distance = (playerPos - transform.position).magnitude;
+        if (distance < 2)
+        {
+            _gameDirector.player.GetHit(damage);
+        }
+
+        _isAttackInProgress = false;
+    }
     private bool CanSeePlayer(Vector3 direction)
     {
         if (Physics.Raycast(transform.position + Vector3.up, direction, 10, seeThroughLayerMask))
@@ -59,7 +87,6 @@ public class Enemy : MonoBehaviour
 
         return true;
     }
-
     public void GetHit()
     {
         _currentHealth--;
@@ -73,14 +100,11 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
-
     private void Die()
     {
         Destroy(gameObject);
     }
 }
-
-
 public enum ActionState
 {
     Standing,
@@ -88,7 +112,6 @@ public enum ActionState
     Attacking,
     Dying,
 }
-
 public enum EnemyType
 {
     Knight,
