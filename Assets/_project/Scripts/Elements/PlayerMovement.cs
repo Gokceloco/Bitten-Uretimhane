@@ -18,11 +18,12 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 _initialMousePos;
 
-    public Transform moveBox;
+    private PlayerAnimator _playerAnimator;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
     }
     private void Update()
     {
@@ -89,6 +90,15 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = runSpeed;
+        }
+
+        if (direction.magnitude > 0)
+        {
+            _playerAnimator.ChangeAnimationState("Run");
+        }
+        else
+        {
+            _playerAnimator.ChangeAnimationState("Idle");
         }
 
         _rb.linearVelocity = direction.normalized * speed + yVelocity;
