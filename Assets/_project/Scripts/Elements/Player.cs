@@ -10,6 +10,10 @@ public class Player : MonoBehaviour
 
     public HealthBar healthBar;
 
+    public SpriteRenderer shadowSR;
+
+    public LayerMask shadowLayerMask;
+
     public void RestartPlayer()
     {
         gameObject.SetActive(true);
@@ -39,9 +43,29 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        CheckIfFellDown();
+        SetShadowPositionAndScale();
+    }
+
+    private void CheckIfFellDown()
+    {
         if (transform.position.y < -10f && gameDirector.gameState == GameState.GamePlay)
         {
             gameDirector.LevelFailed();
         }
+    }
+    
+
+    private void SetShadowPositionAndScale()
+    {
+        if (Physics.Raycast(transform.position + Vector3.up * .1f, Vector3.down, out var hit, 10, shadowLayerMask))
+        {
+            shadowSR.transform.position = hit.point + Vector3.up * .01f;
+        }
+        var distance = (shadowSR.transform.position - transform.position).magnitude;
+
+        shadowSR.transform.localScale = Vector3.one + distance * Vector3.one;
+
+        shadowSR.color = new Color(0,0,0,1 - distance * .3f);
     }
 }

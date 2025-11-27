@@ -55,6 +55,9 @@ public class PlayerMovement : MonoBehaviour
 
         LookAtMouse();
         MovePlayer(direction);
+
+        var angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
+        _playerAnimator.SetRunDirection(angle);
     }
 
     private void LookAtMouse()

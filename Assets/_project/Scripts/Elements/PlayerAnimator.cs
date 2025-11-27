@@ -15,4 +15,9 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool("Idle", false);
         _animator.SetBool(key, true);
     }
+
+    public void SetRunDirection(float angle)
+    {
+        _animator.SetFloat("RunDirection", angle);
+    }
 }
