@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyAnimator : MonoBehaviour
@@ -33,6 +34,15 @@ public class EnemyAnimator : MonoBehaviour
         _animator.SetTrigger("Attack");
         animationState = AnimationState.Attack;
     }
+
+    public void PlayDieAnimation()
+    {
+        if (animationState != AnimationState.Die)
+        {
+            _animator.SetTrigger("Die");
+            animationState = AnimationState.Die;
+        }
+    }
 }
 
 public enum AnimationState
@@ -40,4 +50,5 @@ public enum AnimationState
     Idle,
     Walk,
     Attack,
+    Die,
 }

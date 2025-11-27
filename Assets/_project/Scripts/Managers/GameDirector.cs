@@ -38,13 +38,13 @@ public class GameDirector : MonoBehaviour
     public void LevelCompleted()
     {
         gameState = GameState.Win;
-        Invoke(nameof(LoadNextLevel), 1);
+        Invoke(nameof(LoadNextLevel), 2);
     }
 
     public void LevelFailed()
     {
         gameState = GameState.Lose;
-        Invoke(nameof(StartLevel), 1);
+        Invoke(nameof(StartLevel), 2);
     }
 
 

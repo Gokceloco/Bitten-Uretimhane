@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,6 +17,11 @@ public class Enemy : MonoBehaviour
     public float attackRate;
 
     private EnemyAnimator _enemyAnimator;
+
+    private Coroutine _shootCoroutine;
+
+    public List<Light> lights;
+
     public void StartEnemy(GameDirector gameDirector)
     {
         _currentHealth = startHealth;
@@ -25,6 +31,12 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
+        if (actionState == ActionState.Dying)
+        {
+            _navmeshAgent.isStopped = true;
+            return;
+        }
+
         var playerPos = _gameDirector.player.transform.position;
         var distance = (playerPos - transform.position).magnitude;
         var direction = (playerPos - transform.position).normalized;
@@ -52,7 +64,7 @@ public class Enemy : MonoBehaviour
             _navmeshAgent.isStopped = true;
             if (!_isAttackInProgress)
             {
-                StartCoroutine(AttackPlayerCoroutine());
+                _shootCoroutine = StartCoroutine(AttackPlayerCoroutine());
             }            
         }
     }
@@ -102,7 +114,17 @@ public class Enemy : MonoBehaviour
     }
     private void Die()
     {
-        Destroy(gameObject);
+        if (_shootCoroutine != null)
+        {
+            StopCoroutine(_shootCoroutine);
+        }
+        actionState = ActionState.Dying;
+        _enemyAnimator.PlayDieAnimation();
+        foreach (var l in lights)
+        {
+            l.enabled = false;
+        }
+        Destroy(gameObject, 3);
     }
 }
 public enum ActionState

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameDirector gameDirector;
     public float walkSpeed;
     public float runSpeed;
 
@@ -27,6 +28,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        if (gameDirector.gameState != GameState.GamePlay)
+        {
+            return;
+        }
+
         Vector3 direction = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
@@ -95,14 +101,17 @@ public class PlayerMovement : MonoBehaviour
             speed = runSpeed;
         }
 
-        if (direction.magnitude > 0)
+        if (gameDirector.gameState == GameState.GamePlay)
         {
-            _playerAnimator.ChangeAnimationState("Run");
-        }
-        else
-        {
-            _playerAnimator.ChangeAnimationState("Idle");
-        }
+            if (direction.magnitude > 0)
+            {
+                _playerAnimator.ChangeAnimationState("Run");
+            }
+            else
+            {
+                _playerAnimator.ChangeAnimationState("Idle");
+            }
+        }        
 
         _rb.linearVelocity = direction.normalized * speed + yVelocity;
     }

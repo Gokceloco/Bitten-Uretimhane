@@ -706,6 +706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 433c2d73812a9df45810392d9f9865b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  gameDirector: {fileID: 1074376556}
   walkSpeed: 5
   runSpeed: 10
   jumpForce: 300
@@ -730,7 +731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   gameDirector: {fileID: 1074376556}
-  startHealth: 5
+  startHealth: 1
   healthBar: {fileID: 1026925063}
   shadowSR: {fileID: 496386605}
   shadowLayerMask:

@@ -483,6 +483,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   attackRate: 2
+  lights:
+  - {fileID: 8150444367911925479}
+  - {fileID: 3344454115065301114}
+  - {fileID: 3874637411168389283}
 --- !u!114 &7281690038630838286
 MonoBehaviour:
   m_ObjectHideFlags: 0

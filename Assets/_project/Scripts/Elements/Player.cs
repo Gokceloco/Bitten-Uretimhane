@@ -14,11 +14,20 @@ public class Player : MonoBehaviour
 
     public LayerMask shadowLayerMask;
 
+    private PlayerAnimator _playerAnimator;
+
+    private void Awake()
+    {
+        _playerAnimator = GetComponent<PlayerAnimator>();
+    }
+
     public void RestartPlayer()
     {
         gameObject.SetActive(true);
         transform.position = Vector3.zero;
         _currentHealth = startHealth;
+        _playerAnimator.ChangeAnimationState("Idle");
+        shadowSR.enabled = true;
     }
 
     public void GetHit(int damage)
@@ -27,8 +36,9 @@ public class Player : MonoBehaviour
         healthBar.SetFillAmount((float)_currentHealth / startHealth);
         if (_currentHealth <= 0)
         {
-            gameObject.SetActive(false);
             gameDirector.LevelFailed();
+            _playerAnimator.ChangeAnimationState("Die");
+            shadowSR.enabled = false;
         }
     }
 
