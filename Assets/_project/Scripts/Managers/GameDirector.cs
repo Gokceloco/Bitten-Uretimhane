@@ -1,12 +1,16 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameDirector : MonoBehaviour
 {
     public LevelManager levelManager;
-
+    public FXManager fXManager;
     public Player player;
 
     public GameState gameState;
+
+    public float timeScale;
+
 
     private void Start()
     {
@@ -27,6 +31,18 @@ public class GameDirector : MonoBehaviour
         {
             LoadPreviousLevel();
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            StartCoroutine(BulletTimeCoroutine());
+        }
+    }
+
+    IEnumerator BulletTimeCoroutine()
+    {
+        Time.timeScale = .3f;
+        yield return new WaitForSeconds(2 * .3f);
+        Time.timeScale = 1;
     }
     void StartLevel()
     {
