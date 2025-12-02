@@ -22,6 +22,8 @@ public class Enemy : MonoBehaviour
 
     public List<Light> lights;
 
+    private bool _didNoticePlayer;
+
     public void StartEnemy(GameDirector gameDirector)
     {
         _currentHealth = startHealth;
@@ -49,7 +51,12 @@ public class Enemy : MonoBehaviour
         }
         else if (!_isAttackInProgress && distance < 10 && CanSeePlayer(direction))
         {
-            actionState = ActionState.WalkingTowardsPlayer;            
+            actionState = ActionState.WalkingTowardsPlayer;
+            if (!_didNoticePlayer)
+            {
+                _didNoticePlayer = true;
+                _gameDirector.audioManager.PlayZombieScreamAS();
+            }
         }
 
         //Action

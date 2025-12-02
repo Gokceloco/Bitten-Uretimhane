@@ -30,10 +30,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (gameDirector.gameState != GameState.GamePlay)
         {
-            if (gameDirector.gameState != GameState.Win)
-            {
-                _playerAnimator.ChangeAnimationState("Idle");
-            }
             _rb.linearVelocity = Vector3.zero;
             return;
         }

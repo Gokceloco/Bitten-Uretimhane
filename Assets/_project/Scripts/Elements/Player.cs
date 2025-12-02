@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
             gameDirector.LevelCompleted();
             gameDirector.fXManager.PlayPotionCollectedPS(other.transform.position);
             _playerAnimator.ChangeAnimationState("Drink");
+            gameDirector.audioManager.PlayPositiveAS();
         }
     }
 

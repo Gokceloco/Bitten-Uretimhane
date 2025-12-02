@@ -15,14 +15,14 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
-        StartLevel();
+        RestartLevel();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            StartLevel();
+            RestartLevel();
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -45,35 +45,38 @@ public class GameDirector : MonoBehaviour
         yield return new WaitForSeconds(2 * .3f);
         Time.timeScale = 1;
     }
-    void StartLevel()
+    public void RestartLevel()
     {
         gameState = GameState.GamePlay;
         levelManager.RestartLevelManager();
         player.RestartPlayer();
+        audioManager.PlayAmbientSound();
     }
 
     public void LevelCompleted()
     {
         gameState = GameState.Win;
         Invoke(nameof(LoadNextLevel), 2);
+        audioManager.StopAmbientSound();
     }
 
     public void LevelFailed()
     {
         gameState = GameState.Lose;
-        Invoke(nameof(StartLevel), 2);
+        Invoke(nameof(RestartLevel), 2);
+        audioManager.StopAmbientSound();
     }
 
 
     void LoadPreviousLevel()
     {
         levelManager.levelNo--;
-        StartLevel();
+        RestartLevel();
     }
-    void LoadNextLevel()
+    public void LoadNextLevel()
     {
         levelManager.levelNo++;
-        StartLevel();
+        RestartLevel();
     }
 }
 
