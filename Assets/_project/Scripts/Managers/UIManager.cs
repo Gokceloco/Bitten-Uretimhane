@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public FailUI failUI;
     public void ShowMainMenu()
     {
+        gameDirector.gameState = GameState.MainMenu;
         mainMenu.Show();
     }
     public void HideMainMenu()

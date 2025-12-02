@@ -8,6 +8,8 @@ public class GameDirector : MonoBehaviour
     public AudioManager audioManager;
     public Player player;
 
+    public UIManager uIManager;
+
     public GameState gameState;
 
     public float timeScale;
@@ -15,7 +17,8 @@ public class GameDirector : MonoBehaviour
 
     private void Start()
     {
-        RestartLevel();
+        gameState = GameState.MainMenu;
+        uIManager.ShowMainMenu();
     }
 
     private void Update()
