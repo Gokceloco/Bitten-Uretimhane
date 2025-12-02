@@ -32,7 +32,9 @@ public class Weapon : MonoBehaviour
             shootPosition.position + shootPosition.forward);
         _lastShootTime = Time.time;
         newBullet.StartBullet(gameDirector);
-        
+
+        gameDirector.audioManager.PlayGunShotAS();
+
         muzzleLight.DOKill();
         muzzleLight.intensity = 0;
         muzzleLight.DOIntensity(20,.05f).SetLoops(2, LoopType.Yoyo);

@@ -5,6 +5,7 @@ public class GameDirector : MonoBehaviour
 {
     public LevelManager levelManager;
     public FXManager fXManager;
+    public AudioManager audioManager;
     public Player player;
 
     public GameState gameState;

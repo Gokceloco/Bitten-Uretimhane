@@ -14,6 +14,7 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool("Run", false);
         _animator.SetBool("Idle", false);
         _animator.SetBool("Die", false);
+        _animator.SetBool("Drink", false);
         _animator.SetBool(key, true);
     }
 
