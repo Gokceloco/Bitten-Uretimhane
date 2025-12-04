@@ -18,11 +18,15 @@ public class Enemy : MonoBehaviour
 
     private EnemyAnimator _enemyAnimator;
 
-    private Coroutine _shootCoroutine;
+    private Coroutine _attackCoroutine;
+    private Coroutine _getHitCoroutine;
 
     public List<Light> lights;
 
     private bool _didNoticePlayer;
+    private bool _isGettingHit;
+
+    private Collider _enemyCollider;
 
     public void StartEnemy(GameDirector gameDirector)
     {
@@ -30,6 +34,7 @@ public class Enemy : MonoBehaviour
         _gameDirector = gameDirector;
         _navmeshAgent = GetComponent<NavMeshAgent>();
         _enemyAnimator = GetComponent<EnemyAnimator>();
+        _enemyCollider = GetComponent<CapsuleCollider>();
     }
     private void Update()
     {
@@ -60,7 +65,7 @@ public class Enemy : MonoBehaviour
         }
 
         //Action
-        if (actionState == ActionState.WalkingTowardsPlayer)
+        if (actionState == ActionState.WalkingTowardsPlayer && !_isGettingHit)
         {
             _navmeshAgent.SetDestination(playerPos);
             _navmeshAgent.isStopped = false;
@@ -71,7 +76,7 @@ public class Enemy : MonoBehaviour
             _navmeshAgent.isStopped = true;
             if (!_isAttackInProgress)
             {
-                _shootCoroutine = StartCoroutine(AttackPlayerCoroutine());
+                _attackCoroutine = StartCoroutine(AttackPlayerCoroutine());
             }            
         }
     }
@@ -110,6 +115,7 @@ public class Enemy : MonoBehaviour
     {
         _currentHealth--;
         healthBar.SetFillAmount((float)_currentHealth / startHealth);
+        _getHitCoroutine = StartCoroutine(GetHitCoroutine());
         if (actionState == ActionState.Standing)
         {
             actionState = ActionState.WalkingTowardsPlayer;
@@ -119,11 +125,31 @@ public class Enemy : MonoBehaviour
             Die();
         }
     }
+
+    IEnumerator GetHitCoroutine()
+    {
+        _navmeshAgent.isStopped = true;
+        _isGettingHit = true;
+        if (actionState == ActionState.WalkingTowardsPlayer)
+        {
+            _enemyAnimator.PlayGetHitAnimation();
+        }
+
+        yield return new WaitForSeconds(.15f);
+
+        _navmeshAgent.isStopped = false;
+        _isGettingHit = false;
+        _enemyAnimator.PlayWalkAnimation();
+    }
     private void Die()
     {
-        if (_shootCoroutine != null)
+        if (_attackCoroutine != null)
         {
-            StopCoroutine(_shootCoroutine);
+            StopCoroutine(_attackCoroutine);
+        }
+        if (_getHitCoroutine != null)
+        {
+            StopCoroutine(_getHitCoroutine);
         }
         actionState = ActionState.Dying;
         _enemyAnimator.PlayDieAnimation();
@@ -131,6 +157,7 @@ public class Enemy : MonoBehaviour
         {
             l.enabled = false;
         }
+        _enemyCollider.enabled = false;
         Destroy(gameObject, 3);
     }
 }

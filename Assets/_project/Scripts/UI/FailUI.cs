@@ -10,10 +10,10 @@ public class FailUI : MonoBehaviour
         _canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void Show()
+    public void Show(float delay)
     {
         gameObject.SetActive(true);
-        _canvasGroup.DOFade(1, .2f);
+        _canvasGroup.DOFade(1, .2f).SetDelay(delay);
     }
 
     public void Hide()

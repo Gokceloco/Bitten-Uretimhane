@@ -13,7 +13,7 @@ public class WinUI : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
-        _canvasGroup.DOFade(1, .2f);
+        _canvasGroup.DOFade(1, .2f).SetDelay(2);
     }
 
     public void Hide()

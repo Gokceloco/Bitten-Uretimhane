@@ -32,4 +32,9 @@ public class LevelManager : MonoBehaviour
         _curLevel = Instantiate(levelPrefabs[levelNo-1]);
         _curLevel.StartLevel(gameDirector);
     }
+
+    public float GetCurrentLevelTime()
+    {
+        return _curLevel.levelTime;
+    }
 }

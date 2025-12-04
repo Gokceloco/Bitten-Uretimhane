@@ -5,6 +5,7 @@ public class FXManager : MonoBehaviour
 {
     public ParticleSystem impactPS;
     public ParticleSystem potionCollectedPS;
+    public ParticleSystem zombieImpactPS;
 
     public void PlayImpactPS(Vector3 pos, Vector3 dir, Color color)
     {
@@ -20,6 +21,14 @@ public class FXManager : MonoBehaviour
     {
         var newPS = Instantiate(potionCollectedPS);
         newPS.transform.position = pos + Vector3.up;
+        newPS.Play();
+    }
+
+    public void PlayZombieImpactPS(Vector3 pos, Vector3 dir)
+    {
+        var newPS = Instantiate(zombieImpactPS);
+        newPS.transform.position = pos;
+        newPS.transform.LookAt(pos + dir);
         newPS.Play();
     }
 }

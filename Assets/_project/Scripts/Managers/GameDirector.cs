@@ -6,6 +6,7 @@ public class GameDirector : MonoBehaviour
     public LevelManager levelManager;
     public FXManager fXManager;
     public AudioManager audioManager;
+    public TimerManager timerManager;
     public Player player;
 
     public UIManager uIManager;
@@ -16,8 +17,7 @@ public class GameDirector : MonoBehaviour
 
 
     private void Start()
-    {
-        gameState = GameState.MainMenu;
+    {        
         uIManager.ShowMainMenu();
     }
 
@@ -54,19 +54,21 @@ public class GameDirector : MonoBehaviour
         levelManager.RestartLevelManager();
         player.RestartPlayer();
         audioManager.PlayAmbientSound();
+        timerManager.RestartTimerManager(levelManager.GetCurrentLevelTime());
+        uIManager.ShowInGameUI();
     }
 
     public void LevelCompleted()
     {
         gameState = GameState.Win;
-        Invoke(nameof(LoadNextLevel), 2);
+        uIManager.ShowWinUI();
         audioManager.StopAmbientSound();
     }
 
-    public void LevelFailed()
+    public void LevelFailed(float delay)
     {
         gameState = GameState.Lose;
-        Invoke(nameof(RestartLevel), 2);
+        uIManager.ShowFailUI(delay);
         audioManager.StopAmbientSound();
     }
 

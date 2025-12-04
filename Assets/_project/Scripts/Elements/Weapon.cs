@@ -18,7 +18,8 @@ public class Weapon : MonoBehaviour
     private void Update()
     {      
         if (Input.GetMouseButton(0) 
-            && Time.time - _lastShootTime > attackRate)
+            && Time.time - _lastShootTime > attackRate
+            && gameDirector.gameState == GameState.GamePlay)
         {
             Shoot();
         }

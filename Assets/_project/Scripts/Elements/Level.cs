@@ -4,6 +4,9 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     private GameDirector _gameDirector;
+
+    public float levelTime;
+
     public void StartLevel(GameDirector gameDirector)
     {
         _gameDirector = gameDirector;

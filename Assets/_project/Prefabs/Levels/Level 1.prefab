@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312206be3d906b14c9e5e8c29bd0d309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level
+  levelTime: 10
 --- !u!114 &7663198253916878753
 MonoBehaviour:
   m_ObjectHideFlags: 0
